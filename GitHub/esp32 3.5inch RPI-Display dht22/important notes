@@ -1,0 +1,10 @@
+The .zip library needs to be added manually to the ArduinoIDE since newer versions will not work with the current code.
+
+Other libraries you might need in order to get the script to work are:
+- Adafruit BusIO by Adafruit
+- Adafruit GFX Library by Adafruit
+- Adafruit ILI9341 by AdaFruit (might be needed when using a 9XXX Display)
+- DHT sensor library by Adafruit
+- DHT sensor library for ESPx by beegee_tokyo
+- TFT_eSPI by Bodmer (VERY IMPORTANT)
+- NTPClient by Fabrice Weinberg (As above metioned: use the .zip file from this folder)
