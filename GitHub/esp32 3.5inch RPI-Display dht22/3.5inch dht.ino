@@ -1,11 +1,11 @@
-
-#include <TFT_eSPI.h>
+#include <TFT_eSPI.h> // Hardware-specific library
 #include <SPI.h>
-#include "Free_Fonts.h"
+#include "Free_Fonts.h" // Include the header file attached to this sketch
 
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+
 
 #include "DHT.h"
 #define DHTPIN 27
@@ -14,15 +14,22 @@ DHT dht(DHTPIN, DHTTYPE);
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid     = "SSDI HIER";
-const char* password = "Passwort Hier";
+// Replace with your network credentials
+const char* ssid     = "Nopedinger";
+const char* password = "AlWu12031984sv.wrech";
 
+// Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
+// Variables to save date and time
 String formattedDate;
 String dayStamp;
 String timeStamp;
+
+String temp_s;
+String humi_s;
+
 
 unsigned long drawTime = 0;
 
@@ -41,6 +48,11 @@ void setup(void) {
 
 
   timeClient.begin();
+  // Set offset time in seconds to adjust for your timezone, for example:
+  // GMT +1 = 3600
+  // GMT +8 = 28800
+  // GMT -1 = -3600
+  // GMT 0 = 0
   timeClient.setTimeOffset(3600);
 
 }
@@ -62,73 +74,41 @@ void loop() {
   dayStamp = formattedDate.substring(0, splitT);
   timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
 
-  tft.fillScreen(TFT_BLACK);
-
-  header("My urge to kill is rising!");
-
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(xpos, ypos);
-
+  tft.setTextPadding(120);
   tft.setFreeFont(FSB18);
-  tft.println();
-  tft.print("Uhrzeit: ");
-  tft.print(timeStamp);
 
-  tft.setFreeFont(FSB18);
-  tft.println();
-  tft.print("Datum: ");
-  tft.print(dayStamp);
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.drawString("Uhrzeit:",15,15,GFXFF);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(150, 15, 150, 33, TFT_BLACK);
+  tft.drawString(timeStamp,150,15,GFXFF);
 
-  tft.setFreeFont(FSB18);
-  tft.println();
-  tft.print("Temperatur: ");
-  tft.print(temp);
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.drawString("Datum:",15,90, GFXFF);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(150, 90, 200, 33, TFT_BLACK);
+  tft.drawString(dayStamp,150,90, GFXFF);
+
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.drawString("Temperatur:",15,165,GFXFF);
+  temp_s = String(temp);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(220, 165, 150, 33, TFT_BLACK);
+  tft.setTextPadding(120);  
+  tft.drawString(temp_s,220,165,GFXFF);
   
-  tft.setFreeFont(FSB18);
-  tft.println();
-  tft.print("Luftfeuchtigkeit: ");
-  tft.print(luft);
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.drawString("Luftfeuchtigkeit:",15,240,GFXFF);
+  humi_s = String(luft);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(290, 240, 100, 33, TFT_BLACK);
+  tft.setTextPadding(120);
+  tft.drawString(humi_s,290,240,GFXFF);
   
+
   delay(30000);
+
 }
-
-
-void header(const char *string)
-{
-  tft.setTextSize(1);
-  tft.setTextColor(TFT_MAGENTA, TFT_BLACK);
-  tft.fillRect(0, 0, 480, 30, TFT_BLACK);
-  tft.setTextDatum(TC_DATUM);
-  tft.drawString(string, 239, 2, 4);
-}
-
-
-#ifndef LOAD_GLCD
-//ERROR_Please_enable_LOAD_GLCD_in_User_Setup
-#endif
-
-#ifndef LOAD_FONT2
-//ERROR_Please_enable_LOAD_FONT2_in_User_Setup!
-#endif
-
-#ifndef LOAD_FONT4
-//ERROR_Please_enable_LOAD_FONT4_in_User_Setup!
-#endif
-
-#ifndef LOAD_FONT6
-//ERROR_Please_enable_LOAD_FONT6_in_User_Setup!
-#endif
-
-#ifndef LOAD_FONT7
-//ERROR_Please_enable_LOAD_FONT7_in_User_Setup!
-#endif
-
-#ifndef LOAD_FONT8
-//ERROR_Please_enable_LOAD_FONT8_in_User_Setup!
-#endif
-
-#ifndef LOAD_GFXFF
-ERROR_Please_enable_LOAD_GFXFF_in_User_Setup!
-#endif
-
