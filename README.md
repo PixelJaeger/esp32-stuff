@@ -9,3 +9,6 @@ Or you can use the images i've put in the "micropy used" folder.
 I'll put the names and authors of the libraries i've used in a plain text file called "important notes"
 in every folder that uses ArduinoIDE
 
+
+3. I will NOT show/mention the Pin-Usage since it may differ for your usage and is a headache to be
+change manually within ArduinoIDE. Sorry.
