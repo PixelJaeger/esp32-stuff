@@ -10,5 +10,5 @@ I'll put the names and authors of the libraries i've used in a plain text file c
 in every folder that uses ArduinoIDE
 
 
-3. I will NOT show/mention the Pin-Usage since it may differ for your usage and is a headache to be
-change manually within ArduinoIDE. Sorry.
+3. I will NOT show/mention the Pin-Usage for the 3.5Inch RPI Display since it may differ for your usage
+   and is a headache to be change manually within ArduinoIDE. Sorry.
