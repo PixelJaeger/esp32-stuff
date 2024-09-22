@@ -1,28 +1,25 @@
-#include <TFT_eSPI.h> // Hardware-specific library
+#include <TFT_eSPI.h>
 #include <SPI.h>
-#include "Free_Fonts.h" // Include the header file attached to this sketch
+#include "Free_Fonts.h"
 
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
-
 
 #include "DHT.h"
 #define DHTPIN 27
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
+TFT_eSPI tft = TFT_eSPI();
 
-// Replace with your network credentials
-const char* ssid     = "ssid";
-const char* password = "passwort";
+const char* ssid     = "GurkenLAN";
+const char* password = "banan3nquark";
 
-// Define NTP Client to get time
+
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
-// Variables to save date and time
 String formattedDate;
 String dayStamp;
 String timeStamp;
