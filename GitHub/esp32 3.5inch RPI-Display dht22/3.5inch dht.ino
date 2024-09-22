@@ -12,7 +12,7 @@
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-TFT_eSPI tft = TFT_eSPI();
+TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
 
 // Replace with your network credentials
 const char* ssid     = "Nopedinger";
@@ -53,7 +53,17 @@ void setup(void) {
   // GMT +8 = 28800
   // GMT -1 = -3600
   // GMT 0 = 0
-  timeClient.setTimeOffset(3600);
+  timeClient.setTimeOffset(7200);
+
+
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.setTextPadding(120);
+  tft.setFreeFont(FSB18);
+
+  tft.drawString("Uhrzeit:",15,15,GFXFF);
+  tft.drawString("Datum:",15,90, GFXFF);
+  tft.drawString("Temperatur:",15,165,GFXFF);
+  tft.drawString("Luftfeuchtigkeit:",15,240,GFXFF);
 
 }
 
@@ -62,8 +72,6 @@ void loop() {
   float luft = dht.readHumidity();
   float temp = dht.readTemperature();
 
-  int xpos =  0;
-  int ypos = 40;
 
   while(!timeClient.update()) {
     timeClient.forceUpdate();
@@ -76,39 +84,20 @@ void loop() {
 
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.setCursor(xpos, ypos);
-  tft.setTextPadding(120);
-  tft.setFreeFont(FSB18);
-
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Uhrzeit:",15,15,GFXFF);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.fillRect(150, 15, 150, 33, TFT_BLACK);
   tft.drawString(timeStamp,150,15,GFXFF);
 
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Datum:",15,90, GFXFF);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.fillRect(150, 90, 200, 33, TFT_BLACK);
-  tft.drawString(dayStamp,150,90, GFXFF);
+  tft.drawString(dayStamp,150,90,GFXFF);
 
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Temperatur:",15,165,GFXFF);
   temp_s = String(temp);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.fillRect(220, 165, 150, 33, TFT_BLACK);
-  tft.setTextPadding(120);  
   tft.drawString(temp_s,220,165,GFXFF);
   
-  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Luftfeuchtigkeit:",15,240,GFXFF);
   humi_s = String(luft);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.fillRect(290, 240, 100, 33, TFT_BLACK);
-  tft.setTextPadding(120);
   tft.drawString(humi_s,290,240,GFXFF);
   
-
-  delay(30000);
+  delay(3000);
 
 }
