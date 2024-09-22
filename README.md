@@ -9,5 +9,4 @@ Small collection of projects i did / am doing with my Esp32/Esp8266/Raspberry Pi
    in every folder that uses ArduinoIDE
 
 
-3. I will NOT show/mention the Pin-Usage for the 3.5Inch RPI Display since it may differ for your usage
-   and is a headache to be changed manually within ArduinoIDE. Sorry.
+3. PinUsage for the 3.5Inch display can be found in the file "important notes"
