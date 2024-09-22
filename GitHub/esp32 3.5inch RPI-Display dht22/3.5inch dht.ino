@@ -15,8 +15,8 @@ DHT dht(DHTPIN, DHTTYPE);
 TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
 
 // Replace with your network credentials
-const char* ssid     = "Nopedinger";
-const char* password = "AlWu12031984sv.wrech";
+const char* ssid     = "ssid";
+const char* password = "passwort";
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
