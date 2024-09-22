@@ -3,7 +3,7 @@ The .zip library needs to be added manually to the ArduinoIDE since newer versio
 Other libraries you might need in order to get the script to work are:
 - Adafruit BusIO by Adafruit
 - Adafruit GFX Library by Adafruit
-- Adafruit ILI9341 by AdaFruit (might be needed when using a 9XXX Display)
+- Adafruit ILI9341 by AdaFruit 
 - DHT sensor library by Adafruit
 - DHT sensor library for ESPx by beegee_tokyo
 - TFT_eSPI by Bodmer (VERY IMPORTANT)
@@ -15,3 +15,11 @@ Other libraries you might need in order to get the script to work are:
 
 As for the Boards in ArduinoIDE:
 - esp32 by Espressif Systems (i use an ESP32-Dev Board and this one works fine)
+
+For the PinOUT and Conections:
+You can somewhat follow this Tutorial but it depends on what kind of ESP you are using.
+https://www.tech-sparks.com/using-esp32-with-arduino-ide-to-control-an-lcd-display/
+
+TFT_eSPI scripting examples can be found here:
+https://github.com/Bodmer/TFT_eSPI/tree/master/examples/480%20x%20320
+
