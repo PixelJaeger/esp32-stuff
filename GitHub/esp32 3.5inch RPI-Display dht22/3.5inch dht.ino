@@ -30,6 +30,12 @@ String timeStamp;
 String temp_s;
 String humi_s;
 
+String cuttime;
+
+String oldday;
+String oldtemp;
+String oldhumi;
+String oldtime;
 
 unsigned long drawTime = 0;
 
@@ -81,23 +87,36 @@ void loop() {
   int splitT = formattedDate.indexOf("T");
   dayStamp = formattedDate.substring(0, splitT);
   timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
-
+  cuttime = timeStamp.substring(0,5);
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.fillRect(150, 15, 150, 33, TFT_BLACK);
-  tft.drawString(timeStamp,150,15,GFXFF);
 
+  if (cuttime != oldtime) {
+  tft.fillRect(150, 15, 150, 33, TFT_BLACK);
+  tft.drawString(cuttime,150,15,GFXFF);
+  oldtime == cuttime;
+  }
+
+  if (dayStamp != oldday) {
   tft.fillRect(150, 90, 200, 33, TFT_BLACK);
   tft.drawString(dayStamp,150,90,GFXFF);
+  oldday = dayStamp;
+  }
 
   temp_s = String(temp);
+  if (temp_s != oldtemp) {
   tft.fillRect(220, 165, 150, 33, TFT_BLACK);
   tft.drawString(temp_s,220,165,GFXFF);
-  
+  oldtemp = temp_s;
+  }
+
   humi_s = String(luft);
+  if (humi_s != oldhumi) {
   tft.fillRect(290, 240, 100, 33, TFT_BLACK);
   tft.drawString(humi_s,290,240,GFXFF);
-  
-  delay(3000);
+  oldhumi = humi_s;
+  }
+
+  delay(5000);
 
 }
