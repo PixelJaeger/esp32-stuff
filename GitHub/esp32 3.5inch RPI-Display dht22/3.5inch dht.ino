@@ -13,8 +13,8 @@ DHT dht(DHTPIN, DHTTYPE);
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid     = "ItHurtsWhenIP";
-const char* password = "StHe22031996mac.sux";
+const char* ssid     = "Flowers By Irene";
+const char* password = "vErYsEcUrEpAsSwOrD";
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
@@ -22,12 +22,9 @@ NTPClient timeClient(ntpUDP);
 String formattedDate;
 String dayStamp;
 String timeStamp;
-
 String temp_s;
 String humi_s;
-
 String cuttime;
-
 String oldday;
 String oldtemp;
 String oldhumi;
@@ -36,11 +33,9 @@ String oldtime;
 unsigned long drawTime = 0;
 
 void setup(void) {
-
   tft.begin();
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
-
   dht.begin();
 
   WiFi.begin(ssid, password);
@@ -112,6 +107,5 @@ void loop() {
   delay(5000);
 
 }
-
 
 // todo: different ntp, reask ntp for time every 2ish hours
