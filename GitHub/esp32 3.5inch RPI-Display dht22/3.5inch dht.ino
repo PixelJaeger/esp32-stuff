@@ -13,9 +13,8 @@ DHT dht(DHTPIN, DHTTYPE);
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid     = "GurkenLAN";
-const char* password = "banan3nquark";
-
+const char* ssid     = "ItHurtsWhenIP";
+const char* password = "StHe22031996mac.sux";
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
@@ -51,13 +50,10 @@ void setup(void) {
 
 
   timeClient.begin();
-  // Set offset time in seconds to adjust for your timezone, for example:
   // GMT +1 = 3600
-  // GMT +8 = 28800
   // GMT -1 = -3600
   // GMT 0 = 0
   timeClient.setTimeOffset(7200);
-
 
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   tft.setTextPadding(120);
@@ -74,7 +70,6 @@ void loop() {
 
   float luft = dht.readHumidity();
   float temp = dht.readTemperature();
-
 
   while(!timeClient.update()) {
     timeClient.forceUpdate();
@@ -117,3 +112,6 @@ void loop() {
   delay(5000);
 
 }
+
+
+// todo: different ntp, reask ntp for time every 2ish hours
