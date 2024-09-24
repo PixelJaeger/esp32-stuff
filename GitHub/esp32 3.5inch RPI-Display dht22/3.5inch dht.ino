@@ -8,6 +8,7 @@
 
 
 #include "DHT.h"
+#define ARRAYSIZE 10
 #define DHTPIN 27
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
@@ -17,8 +18,8 @@ TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with defau
 unsigned long drawTime = 0;
 
 // Replace with your network credentials
-const char* ssid     = "badProgramminLanguages";
-const char* password = "c/c#/c++/java/javascript/node.js";
+const char* ssid     = "iReallyHateC";
+const char* password = "gimmePythonOrgimmeDeath!";
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
@@ -39,6 +40,22 @@ String oldtemp;
 String oldhumi;
 String oldtime;
 
+String bottomtext[ARRAYSIZE] = {
+  "A Python() a day keeps the C-Compiler away!",
+  "If you can read this you're way to close!",
+  "It hurts when IP ain't funny! Go see a DNS!",
+  " {(.) O.O (.)} Tiddie McEarmuffs, Best Device ever!",
+  "I ran out of puns. Have a nice \"sod off!\" instead!",
+  "42 isn't the answer to everything. Ask Chuck Norris instead!",
+  "I'm here to chew gum and kick ass! But what is this C shit?!",
+  "Duke Nukem Forever is a good game! Do i get paid now?",
+  "Crouching C Code, hidden PythonBomb",
+  "Wanna C(my)PP sounds bad. Wanna see my python sound better!"
+};
+
+int rnd_q;
+int old_q;
+
 // mogel and schleife can be adjusted to your preference
 // Due to limitations of the DHT22 do not set schleife below 2000
 int mogel = 0;
@@ -58,7 +75,6 @@ void setup(void) {
     delay(500);
   }
 
-
   timeClient.begin();
   // Set offset time in seconds to adjust for your timezone, for example:
   // GMT +1 = 3600
@@ -69,13 +85,21 @@ void setup(void) {
 
 
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.setTextPadding(120);
+  tft.setTextPadding(60);
   tft.setFreeFont(FSB18);
 
   tft.drawString("Uhrzeit:",15,15,GFXFF);
   tft.drawString("Datum:",15,90, GFXFF);
   tft.drawString("Temperatur:",15,165,GFXFF);
+
+  //disgusting hack since the font can't display a "°"
+  tft.setFreeFont(FSB9);
+  tft.drawString("o",305,165,GFXFF);
+  tft.setFreeFont(FSB18);
+  tft.drawString("C",315,165,GFXFF);
+
   tft.drawString("Luftfeuchtigkeit:",15,240,GFXFF);
+  tft.drawString("%",370,240,GFXFF);
 
 }
 
@@ -97,6 +121,7 @@ void loop() {
   cuttime = timeStamp.substring(0,5);
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setFreeFont(FSB18);
 
   if (cuttime != oldtime) {
   tft.fillRect(150, 15, 150, 33, TFT_BLACK);
@@ -114,7 +139,7 @@ void loop() {
 
   temp_s = String(temp);
   if (temp_s != oldtemp) {
-  tft.fillRect(220, 165, 150, 33, TFT_BLACK);
+  tft.fillRect(220, 165, 50, 33, TFT_BLACK);
   delay(mogel);
   tft.drawString(temp_s,220,165,GFXFF);
   oldtemp = temp_s;
@@ -122,10 +147,19 @@ void loop() {
 
   humi_s = String(luft);
   if (humi_s != oldhumi) {
-  tft.fillRect(290, 240, 100, 33, TFT_BLACK);
+  tft.fillRect(290, 240, 50, 33, TFT_BLACK);
   delay(mogel);
   tft.drawString(humi_s,290,240,GFXFF);
   oldhumi = humi_s;
+  }
+
+  rnd_q = random(0,9);
+  if (rnd_q != old_q) {
+  tft.setTextColor(TFT_SKYBLUE, TFT_BLACK);
+  tft.setFreeFont(FSB9);
+  tft.fillRect(5, 300, 475, 20, TFT_BLACK);
+  tft.drawString(bottomtext[rnd_q],5,300,GFXFF);
+  old_q = rnd_q;
   }
 
   delay(schleife);
