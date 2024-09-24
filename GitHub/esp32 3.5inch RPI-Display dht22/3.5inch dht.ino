@@ -1,41 +1,56 @@
-#include <TFT_eSPI.h>
+#include <TFT_eSPI.h> // Hardware-specific library
 #include <SPI.h>
-#include "Free_Fonts.h"
+#include "Free_Fonts.h" // Include the header file attached to this sketch
 
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+
 
 #include "DHT.h"
 #define DHTPIN 27
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-TFT_eSPI tft = TFT_eSPI();
+TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
 
-const char* ssid     = "Flowers By Irene";
-const char* password = "vErYsEcUrEpAsSwOrD";
+unsigned long drawTime = 0;
 
+// Replace with your network credentials
+const char* ssid     = "badProgramminLanguages";
+const char* password = "c/c#/c++/java/javascript/node.js";
+
+// Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
+// Variables to save date and time
 String formattedDate;
 String dayStamp;
 String timeStamp;
+
 String temp_s;
 String humi_s;
+
 String cuttime;
+
 String oldday;
 String oldtemp;
 String oldhumi;
 String oldtime;
 
-unsigned long drawTime = 0;
+// mogel and schleife can be adjusted to your preference
+// Due to limitations of the DHT22 do not set schleife below 2000
+int mogel = 0;
+int schleife = 10000;
+
 
 void setup(void) {
+
   tft.begin();
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
+
   dht.begin();
 
   WiFi.begin(ssid, password);
@@ -45,10 +60,13 @@ void setup(void) {
 
 
   timeClient.begin();
+  // Set offset time in seconds to adjust for your timezone, for example:
   // GMT +1 = 3600
+  // GMT +8 = 28800
   // GMT -1 = -3600
   // GMT 0 = 0
   timeClient.setTimeOffset(7200);
+
 
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   tft.setTextPadding(120);
@@ -62,9 +80,11 @@ void setup(void) {
 }
 
 void loop() {
-
+  // to-do: alle 2(?) stunden wifi an und neues ntp holen
+  
   float luft = dht.readHumidity();
   float temp = dht.readTemperature();
+
 
   while(!timeClient.update()) {
     timeClient.forceUpdate();
@@ -80,12 +100,14 @@ void loop() {
 
   if (cuttime != oldtime) {
   tft.fillRect(150, 15, 150, 33, TFT_BLACK);
+  delay(mogel);
   tft.drawString(cuttime,150,15,GFXFF);
   oldtime == cuttime;
   }
 
   if (dayStamp != oldday) {
   tft.fillRect(150, 90, 200, 33, TFT_BLACK);
+  delay(mogel);
   tft.drawString(dayStamp,150,90,GFXFF);
   oldday = dayStamp;
   }
@@ -93,6 +115,7 @@ void loop() {
   temp_s = String(temp);
   if (temp_s != oldtemp) {
   tft.fillRect(220, 165, 150, 33, TFT_BLACK);
+  delay(mogel);
   tft.drawString(temp_s,220,165,GFXFF);
   oldtemp = temp_s;
   }
@@ -100,12 +123,11 @@ void loop() {
   humi_s = String(luft);
   if (humi_s != oldhumi) {
   tft.fillRect(290, 240, 100, 33, TFT_BLACK);
+  delay(mogel);
   tft.drawString(humi_s,290,240,GFXFF);
   oldhumi = humi_s;
   }
 
-  delay(5000);
+  delay(schleife);
 
 }
-
-// todo: different ntp, reask ntp for time every 2ish hours
