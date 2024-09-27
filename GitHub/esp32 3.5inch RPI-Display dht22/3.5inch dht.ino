@@ -1,3 +1,8 @@
+// to-do:
+// alle 2(?) stunden wifi an und neues ntp holen
+// code aufräumen
+// Kommentare in einer einzigen Sprache schreiben...
+
 #include <TFT_eSPI.h> // Hardware-specific library
 #include <SPI.h>
 #include "Free_Fonts.h" // Include the header file attached to this sketch
@@ -6,26 +11,26 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 
-
 #include "DHT.h"
 #define ARRAYSIZE 10
 #define DHTPIN 27
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-TFT_eSPI tft = TFT_eSPI();                   // Invoke custom library with default width and height
+TFT_eSPI tft = TFT_eSPI();
 
+//nicht sicher ob wichtig oder löschbar
 unsigned long drawTime = 0;
 
 // Replace with your network credentials
-const char* ssid     = "iReallyHateC";
-const char* password = "gimmePythonOrgimmeDeath!";
+const char* ssid     = "iDontWannaCodeInC";
+const char* password = "14m4p4r3rt0ngu3";
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
-// Variables to save date and time
+// Variabeln, vielleicht kürzbar?
 String formattedDate;
 String dayStamp;
 String timeStamp;
@@ -104,7 +109,6 @@ void setup(void) {
 }
 
 void loop() {
-  // to-do: alle 2(?) stunden wifi an und neues ntp holen
   
   float luft = dht.readHumidity();
   float temp = dht.readTemperature();
