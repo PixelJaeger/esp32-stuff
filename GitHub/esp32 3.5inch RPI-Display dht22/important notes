@@ -8,9 +8,9 @@ Other libraries you might need in order to get the script to work are:
 - DHT sensor library for ESPx by beegee_tokyo
 - TFT_eSPI by Bodmer (VERY IMPORTANT)
 
---------- DO NOT AUTO-UPDATE THIS LIBRARY!-------------
+--------- DO NOT UPDATE/AUTO-UPDATE THIS LIBRARY!-------------
 - NTPClient by Fabrice Weinberg (As above metioned: use the .zip file from this folder)
---------- DO NOT AUTO-UPDATE THIS LIBRARY!-------------
+--------- DO NOT UPDATE/AUTO-UPDATE THIS LIBRARY!-------------
 
 
 As for the Boards in ArduinoIDE:
