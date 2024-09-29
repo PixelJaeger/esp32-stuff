@@ -1,32 +1,30 @@
 // to-do:
 // alle 2(?) stunden wifi an und neues ntp holen
 // code aufräumen
-// Kommentare in einer einzigen Sprache schreiben...
 
-#include <TFT_eSPI.h> // Hardware-specific library
+#include <TFT_eSPI.h> // Hardware-Spezifische Lib
 #include <SPI.h>
-#include "Free_Fonts.h" // Include the header file attached to this sketch
-
+#include "Free_Fonts.h" // Verschiedene Schrifttyp-Definitionen laden
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
-
 #include "DHT.h"
+
 #define ARRAYSIZE 10
 #define DHTPIN 27
 #define DHTTYPE DHT22
-DHT dht(DHTPIN, DHTTYPE);
 
+DHT dht(DHTPIN, DHTTYPE);
 TFT_eSPI tft = TFT_eSPI();
 
 //nicht sicher ob wichtig oder löschbar
 unsigned long drawTime = 0;
 
-// Replace with your network credentials
-const char* ssid     = "iDontWannaCodeInC";
-const char* password = "14m4p4r3rt0ngu3";
+// WLAN Name und Passwort infos
+const char* ssid     = "CSuxBigPP";
+const char* password = "GoDih4t3th15c.suxbig";
 
-// Define NTP Client to get time
+// NTP-Client
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
@@ -34,17 +32,13 @@ NTPClient timeClient(ntpUDP);
 String formattedDate;
 String dayStamp;
 String timeStamp;
-
 String temp_s;
 String humi_s;
-
 String cuttime;
-
 String oldday;
 String oldtemp;
 String oldhumi;
 String oldtime;
-
 String bottomtext[ARRAYSIZE] = {
   "A Python() a day keeps the C-Compiler away!",
   "If you can read this you're way to close!",
@@ -53,7 +47,7 @@ String bottomtext[ARRAYSIZE] = {
   "I ran out of puns. Have a nice \"sod off!\" instead!",
   "42 isn't the answer to everything. Ask Chuck Norris instead!",
   "I'm here to chew gum and kick ass! But what is this C shit?!",
-  "Duke Nukem Forever is a good game! Do i get paid now?",
+  "Duke Nukem Forever is a good game! Said no one ever...",
   "Crouching C Code, hidden PythonBomb",
   "Wanna C(my)PP sounds bad. Wanna see my python sound better!"
 };
@@ -61,11 +55,10 @@ String bottomtext[ARRAYSIZE] = {
 int rnd_q;
 int old_q;
 
-// mogel and schleife can be adjusted to your preference
-// Due to limitations of the DHT22 do not set schleife below 2000
+// mogel und schleife können angepasst werden
+// Wegen Limitationen des DHT22 darf schleife nicht auf weniger als 2 Sekunden (2000) gesetzt werden!
 int mogel = 0;
 int schleife = 10000;
-
 
 void setup(void) {
 
@@ -81,13 +74,12 @@ void setup(void) {
   }
 
   timeClient.begin();
-  // Set offset time in seconds to adjust for your timezone, for example:
+  // Zeitzonendifferenz in Sekunden
   // GMT +1 = 3600
   // GMT +8 = 28800
   // GMT -1 = -3600
   // GMT 0 = 0
   timeClient.setTimeOffset(7200);
-
 
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   tft.setTextPadding(60);
@@ -97,7 +89,7 @@ void setup(void) {
   tft.drawString("Datum:",15,90, GFXFF);
   tft.drawString("Temperatur:",15,165,GFXFF);
 
-  //disgusting hack since the font can't display a "°"
+  //ekliger hack um das Grad-Symbol zu emulieren
   tft.setFreeFont(FSB9);
   tft.drawString("o",305,165,GFXFF);
   tft.setFreeFont(FSB18);
@@ -112,7 +104,6 @@ void loop() {
   
   float luft = dht.readHumidity();
   float temp = dht.readTemperature();
-
 
   while(!timeClient.update()) {
     timeClient.forceUpdate();
